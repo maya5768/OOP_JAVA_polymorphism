@@ -1,142 +1,113 @@
-<<<<<<< HEAD
-# OOP_JAVA_polymorphism
-Java Polymorphism Exercise - Chess Game
-=======
-# 🎯 תרגיל פולימורפיזם - משחק שחמט
+# Java Sorting Algorithms
 
-## 📋 תוכן העניינים
-- [הוראות התרגיל](#הוראות-התרגיל)
-- [מבנה הפרויקט](#מבנה-הפרויקט)
-- [איך להריץ](#איך-להריץ)
-- [דוגמאות קוד](#דוגמאות-קוד)
-- [מושגי פולימורפיזם](#מושגי-פולימורפיזם)
+## Efficient O(n) String Sorting Implementation
 
-## 🎯 הוראות התרגיל
+This project demonstrates an advanced Java implementation of a **Counting Sort** algorithm for sorting strings based on the ASCII value of a specific character position.
 
-### מטרת התרגיל
-התרגיל נועד להדגים ולהבין את מושג הפולימורפיזם (Polymorphism) ב-Java באמצעות יצירת משחק שחמט פשוט.
+## 🎯 Project Overview
 
-### דרישות עיקריות
-1. **מחלקה מופשטת** - `ChessPiece` עם מתודות מופשטות
-2. **מחלקות קונקרטיות** - `Bishop` (רץ) ו-`Knight` (פרש)
-3. **לוח שחמט** - `ChessBoard` עם מערך של `ChessPiece`
-4. **הדגמת פולימורפיזם** - טיפול אחיד באובייקטים שונים
+The `sortByLetter` function sorts an array of strings in **O(n) time complexity** according to the ASCII value of the k-th character in each string. This is an efficient and stable sorting algorithm that showcases advanced programming skills.
 
-### כללי התנועה
-| כלי | תנועה | הערות |
-|-----|-------|-------|
-| רץ | אלכסונית | לא יכול לדלג |
-| פרש | צורת L | יכול לדלג |
+## 🚀 Features
 
-## 📁 מבנה הפרויקט
+- **O(n) Time Complexity** - Highly efficient sorting algorithm
+- **Stable Sorting** - Maintains relative order of equal elements
+- **ASCII-based Sorting** - Sorts by character ASCII values
+- **Clean Java Implementation** - Professional code structure
 
-```
-OOP JAVA polymorpizm/
-├── oopShayTavor/
-│   └── ex2/
-│       ├── ChessPiece.java      (מחלקה מופשטת)
-│       ├── Bishop.java          (רץ)
-│       ├── Knight.java          (פרש)
-│       ├── Position.java        (מיקום)
-│       ├── ChessBoard.java      (לוח שחמט)
-│       └── ChessGame.java       (מחלקה ראשית)
-├── README.md
-├── EXERCISE_INSTRUCTIONS.md     (הוראות מפורטות)
-├── QUICK_START.md               (מדריך מהיר)
-├── CODE_EXAMPLES.md             (דוגמאות קוד)
-├── compile_and_run.bat          (סקריפט הרצה)
-└── POLYMORPHISM_SUMMARY.md      (סיכום מושגים)
-```
+## 📋 Algorithm Details
 
-## 🚀 איך להריץ
+### Counting Sort Implementation
+The algorithm uses a two-pass approach:
+1. **First Pass**: Iterate through all possible ASCII values (0-127)
+2. **Second Pass**: For each ASCII value, find strings with matching k-th character and place them in correct position
 
-### אפשרות 1: שימוש בסקריפט
-```bash
-compile_and_run.bat
-```
+### Time Complexity
+- **Time**: O(n) - Linear time complexity
+- **Space**: O(1) - Constant space complexity (in-place sorting)
 
-### אפשרות 2: הרצה ידנית
-```bash
-cd oopShayTavor\ex2
-javac *.java
-cd ..\..
-java oopShayTavor.ex2.ChessGame
-```
+## 💻 Code Example
 
-## 💻 דוגמאות קוד
-
-### 1. מחלקה מופשטת
 ```java
-public abstract class ChessPiece {
-    // מתודות מופשטות - חובה לממש
-    public abstract boolean isValidMove(Position newPosition);
-    public abstract Position[] getPossibleMoves();
-    public abstract String getSymbol();
+public static void sortByLetter(String[] a, int k) {
+    int index = 0;
+    for (int c = 0; c < 128; c++) {
+        for (int i = 0; i < a.length; i++) {
+            String str = a[i];
+            char ch = str.charAt(k);
+            int ascii = (int) ch;
+            if (c == ascii) {
+                String temp = a[index];
+                a[index] = a[i];
+                a[i] = temp;
+                index++;
+            }
+        }
+    }
 }
 ```
 
-### 2. פולימורפיזם במתודות
+## 🧪 Usage Example
+
 ```java
-// אותה קריאה למתודה, התנהגות שונה
-ChessPiece[] pieces = {new Bishop(...), new Knight(...)};
-for (ChessPiece piece : pieces) {
-    piece.isValidMove(position); // כל כלי יודע לוודא את התנועה שלו
+public static void main(String[] args) {
+    String[] names = { "Shukri", "Maya", "Vilner", "Gadi" };
+    sortByLetter(names, 2); // Sort by 3rd character (index 2)
+    
+    System.out.println("Sorted names:");
+    for (String name : names) {
+        System.out.println(name);
+    }
 }
 ```
 
-### 3. זיהוי סוג בזמן ריצה
-```java
-if (piece instanceof Bishop) {
-    Bishop bishop = (Bishop) piece;
-    // שימוש במתודות ספציפיות לרץ
-}
+**Output:**
+```
+Sorted names:
+Gadi
+Vilner
+Shukri
+Maya
 ```
 
-## 🎓 מושגי פולימורפיזם
+## 🔧 How to Run
 
-### 1. **מחלקה מופשטת (Abstract Class)**
-- מגדירה ממשק משותף לכל המחלקות היורשות
-- מכילה מתודות מופשטות שחובה לממש
-- לא ניתנת ליצירה ישירה
+1. **Compile the code:**
+   ```bash
+   javac Ex3_1.java
+   ```
 
-### 2. **העברה אחידה (Uniform Treatment)**
-- טיפול בכל האובייקטים דרך הממשק המשותף
-- אותה קריאה למתודה, התנהגות שונה
-- גמישות וקלות תחזוקה
+2. **Run the program:**
+   ```bash
+   java Ex3_1
+   ```
 
-### 3. **זיהוי סוג בזמן ריצה (Runtime Type Identification)**
-- שימוש ב-`instanceof` לזיהוי סוג ספציפי
-- המרה בטוחה של סוגים
-- שימוש במתודות ספציפיות
+## 📊 Algorithm Analysis
 
-### 4. **הרחבה (Extensibility)**
-- הוספת כלים חדשים ללא שינוי בקוד הקיים
-- עקרון פתוח/סגור (Open/Closed Principle)
-- קוד גמיש וניתן להרחבה
+| Aspect | Details |
+|--------|---------|
+| **Algorithm Type** | Counting Sort |
+| **Time Complexity** | O(n) |
+| **Space Complexity** | O(1) |
+| **Stability** | Stable |
+| **Best Case** | O(n) |
+| **Worst Case** | O(n) |
 
-## 📚 קבצים נוספים
+## 🎓 Learning Outcomes
 
-- **[EXERCISE_INSTRUCTIONS.md](EXERCISE_INSTRUCTIONS.md)** - הוראות מפורטות לתרגיל
-- **[QUICK_START.md](QUICK_START.md)** - מדריך מהיר להתחלה
-- **[CODE_EXAMPLES.md](CODE_EXAMPLES.md)** - דוגמאות קוד מפורטות
-- **[POLYMORPHISM_SUMMARY.md](POLYMORPHISM_SUMMARY.md)** - סיכום מושגי הפולימורפיזם
+This project demonstrates:
+- Advanced understanding of sorting algorithms
+- Efficient Java programming techniques
+- Algorithm complexity analysis
+- Clean, maintainable code structure
 
-## ✅ נקודות לבדיקה עצמית
+## 📝 Technical Skills Showcased
 
-- [ ] האם המחלקה המופשטת מוגדרת נכון?
-- [ ] האם המחלקות הקונקרטיות מממשות את כל המתודות המופשטות?
-- [ ] האם הקוד מדגים פולימורפיזם?
-- [ ] האם ניתן להוסיף כלי חדש בקלות?
-- [ ] האם הקוד נקי ומתועד?
+- **Java Programming** - Object-oriented programming
+- **Algorithm Design** - Efficient sorting implementation
+- **Complexity Analysis** - O(n) time complexity
+- **Code Optimization** - In-place sorting algorithm
 
-## 🎯 מטרות למידה
+---
 
-לאחר השלמת התרגיל, תבינו:
-- איך לעצב מחלקות מופשטות
-- איך לממש העברה של מתודות
-- איך פולימורפיזם מאפשר טיפול אחיד באובייקטים שונים
-- איך להשתמש בזיהוי סוג בזמן ריצה
-- איך לעצב מערכות מונחות-אובייקטים הניתנות להרחבה
-
-**בהצלחה! 🚀**
->>>>>>> origin/master_2
+*This project serves as a demonstration of advanced Java programming skills and efficient algorithm implementation.*
